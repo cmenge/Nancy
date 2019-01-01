@@ -3,6 +3,8 @@
     <TargetFrameworks>netcoreapp2.0;net452</TargetFrameworks>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Update="FakeItEasy" Version="4.9.2" />
+    <PackageReference Update="FakeItEasy.Analyzer.CSharp" Version="4.9.2" />
     <PackageReference Update="Microsoft.NET.Test.Sdk" Version="15.9.0" />
     <PackageReference Update="xunit" Version="2.4.1" />
     <PackageReference Update="xunit.runner.visualstudio" Version="2.4.1">
