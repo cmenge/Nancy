@@ -10,14 +10,14 @@ var nogit = Argument<bool>("nogit", false);
 
 // Variables
 var configuration = "Release";
-var fullFrameworkTarget = "net452";
+// var fullFrameworkTarget = "net452";
 var netStandardTarget = "netstandard2.0";
-var netCoreTarget = "netcoreapp2.0";
+var netCoreTarget = "netcoreapp2.2";
 
 // Directories
 var output = Directory("build");
 var outputBinaries = output + Directory("binaries");
-var outputBinariesNet452 = outputBinaries + Directory(fullFrameworkTarget);
+// var outputBinariesNet452 = outputBinaries + Directory(fullFrameworkTarget);
 var outputBinariesNetstandard = outputBinaries + Directory(netStandardTarget);
 var outputPackages = output + Directory("packages");
 var outputNuGet = output + Directory("nuget");
@@ -39,7 +39,7 @@ Task("Clean")
             outputBinaries,
             outputPackages,
             outputNuGet,
-            outputBinariesNet452,
+            // outputBinariesNet452,
             outputBinariesNetstandard
         });
 
@@ -68,11 +68,11 @@ Task("Compile")
             var content =
                 System.IO.File.ReadAllText(project.FullPath, Encoding.UTF8);
 
-            if (IsRunningOnUnix() && content.Contains(">" + fullFrameworkTarget + "<"))
-            {
-                Information(project.GetFilename() + " only supports " +fullFrameworkTarget + " and cannot be built on *nix. Skipping.");
-                continue;
-            }
+            // if (IsRunningOnUnix() && content.Contains(">" + fullFrameworkTarget + "<"))
+            // {
+            //     Information(project.GetFilename() + " only supports " +fullFrameworkTarget + " and cannot be built on *nix. Skipping.");
+            //     continue;
+            // }
 
             DotNetCoreBuild(project.GetDirectory().FullPath, new DotNetCoreBuildSettings {
                 ArgumentCustomization = args => {
@@ -113,11 +113,11 @@ Task("Package-NuGet")
             var content =
                 System.IO.File.ReadAllText(project.FullPath, Encoding.UTF8);
 
-            if (IsRunningOnUnix() && content.Contains(">" + fullFrameworkTarget + "<"))
-            {
-                Information(project.GetFilename() + " only supports " +fullFrameworkTarget + " and cannot be packaged on *nix. Skipping.");
-                continue;
-            }
+            // if (IsRunningOnUnix() && content.Contains(">" + fullFrameworkTarget + "<"))
+            // {
+            //     Information(project.GetFilename() + " only supports " +fullFrameworkTarget + " and cannot be packaged on *nix. Skipping.");
+            //     continue;
+            // }
 
             DotNetCorePack(project.GetDirectory().FullPath, new DotNetCorePackSettings {
                 Configuration = configuration,
@@ -132,10 +132,10 @@ Task("Publish")
     .Does(() =>
     {
         // Copy net452 binaries.
-        CopyFiles(GetFiles("./src/**/bin/" + configuration + "/" + fullFrameworkTarget + "/*.dll")
-            + GetFiles("./src/**/bin/" + configuration + "/" + fullFrameworkTarget + "/*.xml")
-            + GetFiles("./src/**/bin/" + configuration + "/" + fullFrameworkTarget + "/*.pdb")
-            + GetFiles("./src/**/*.ps1"), outputBinariesNet452);
+        // CopyFiles(GetFiles("./src/**/bin/" + configuration + "/" + fullFrameworkTarget + "/*.dll")
+        //     + GetFiles("./src/**/bin/" + configuration + "/" + fullFrameworkTarget + "/*.xml")
+        //     + GetFiles("./src/**/bin/" + configuration + "/" + fullFrameworkTarget + "/*.pdb")
+        //     + GetFiles("./src/**/*.ps1"), outputBinariesNet452);
 
         // Copy netstandard binaries.
         CopyFiles(GetFiles("./src/**/bin/" + configuration + "/" + netStandardTarget + "/*.dll")
@@ -252,50 +252,59 @@ Task("Test")
     .Description("Executes unit tests for all projects")
     .IsDependentOn("Compile")
     .Does(() =>
-    {
+    {        
+        var settings = new ProcessSettings {
+            Arguments = string.Concat("test --configuration ", configuration)
+        };
+
+        if (StartProcess("dotnet", settings) != 0)
+        {
+            throw new CakeException("One or more tests failed during test execution");
+        }
+
         /*
             Exclude Nancy.ViewEngines.Spark.Tests from test execution until their problem
             with duplicate assembly references (if the same assembly exists more than once
             in the application domain, it fails to compile the views) has been fixed.
         */
 
-        var projects =
-            GetFiles("./test/**/*.csproj") -
-            GetFiles("./test/Nancy.ViewEngines.Spark.Tests/Nancy.ViewEngines.Spark.Tests.csproj");
+        // var projects =
+        //     GetFiles("./test/**/*.csproj");
+        //     - GetFiles("./test/Nancy.ViewEngines.Spark.Tests/Nancy.ViewEngines.Spark.Tests.csproj");
 
-        if (projects.Count == 0)
-        {
-            throw new CakeException("Unable to find any projects to test.");
-        }
+        // if (projects.Count == 0)
+        // {
+        //     throw new CakeException("Unable to find any projects to test.");
+        // }
 
-        foreach(var project in projects)
-        {
-            var content =
-                System.IO.File.ReadAllText(project.FullPath, Encoding.UTF8);
+        // foreach(var project in projects)
+        // {
+        //     var content =
+        //         System.IO.File.ReadAllText(project.FullPath, Encoding.UTF8);
 
-            if (IsRunningOnUnix() && content.Contains(">" + fullFrameworkTarget + "<"))
-            {
-                Information(project.GetFilename() + " only supports " +fullFrameworkTarget + " and tests cannot be executed on *nix. Skipping.");
-                continue;
-            }
+        //     if (IsRunningOnUnix() && content.Contains(">" + fullFrameworkTarget + "<"))
+        //     {
+        //         Information(project.GetFilename() + " only supports " +fullFrameworkTarget + " and tests cannot be executed on *nix. Skipping.");
+        //         continue;
+        //     }
 
-            var settings = new ProcessSettings {
-                Arguments = string.Concat("xunit -configuration ", configuration, " -nobuild"),
-                WorkingDirectory = project.GetDirectory()
-            };
+        //     var settings = new ProcessSettings {
+        //         Arguments = string.Concat("xunit -configuration ", configuration, " -nobuild"),
+        //         WorkingDirectory = project.GetDirectory()
+        //     };
 
-            if (IsRunningOnUnix())
-            {
-                settings.Arguments.Append(string.Concat("-framework ", netCoreTarget));
-            }
+        //     if (IsRunningOnUnix())
+        //     {
+        //         settings.Arguments.Append(string.Concat("-framework ", netCoreTarget));
+        //     }
 
-            Information("Executing tests for " + project.GetFilename() + " with arguments: " + settings.Arguments.Render());
+        //     Information("Executing tests for " + project.GetFilename() + " with arguments: " + settings.Arguments.Render());
 
-            if (StartProcess("dotnet", settings) != 0)
-            {
-                throw new CakeException("One or more tests failed during execution of: " + project.GetFilename());
-            }
-        }
+        //     if (StartProcess("dotnet", settings) != 0)
+        //     {
+        //         throw new CakeException("One or more tests failed during execution of: " + project.GetFilename());
+        //     }
+        // }
     });
 
 Task("Update-Version")
