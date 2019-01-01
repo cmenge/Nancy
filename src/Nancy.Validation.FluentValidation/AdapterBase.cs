@@ -41,9 +41,21 @@
         {
             return displayName =>
             {
-                return new MessageFormatter()
-                    .AppendPropertyName(displayName ?? rule.GetDisplayName())
-                    .BuildMessage(validator.ErrorMessageSource.GetString());
+                // FIXME:
+                // I'm not sure when the validation rules are to be triggered - this seems the easiest hack for now
+
+                //return new MessageFormatter()
+                //    .AppendPropertyName(displayName ?? rule.GetDisplayName())
+                //    .BuildMessage(validator.Options.ErrorMessageSource.GetString(FIXME));
+
+                throw new NotImplementedException("Unclear where to get the validation context and how this abstraction still goes well with fluent validator 8...");
+                //return new MessageFormatter()
+                //    .AppendPropertyName(displayName ?? rule.GetDisplayName())
+                //    .BuildMessage(validator.Options.ErrorMessageSource.GetString(null));
+
+                //return new MessageFormatter()
+                //    .AppendPropertyName(displayName ?? rule.GetDisplayName())
+                //    .BuildMessage(validator.ErrorMessageSource.GetString());
             };
         }
     }
