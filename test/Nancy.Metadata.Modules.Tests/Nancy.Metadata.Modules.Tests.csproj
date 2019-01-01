@@ -3,6 +3,7 @@
     <TargetFrameworks>netcoreapp2.0;net452</TargetFrameworks>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Update="xunit" Version="2.4.1" />
     <PackageReference Update="xunit.runner.visualstudio" Version="2.4.1">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
