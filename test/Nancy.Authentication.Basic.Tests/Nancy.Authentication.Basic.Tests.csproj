@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>netcoreapp2.0;net452</TargetFrameworks>
+    <TargetFrameworks>netcoreapp2.2;</TargetFrameworks>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Update="FakeItEasy" Version="4.9.2" />
