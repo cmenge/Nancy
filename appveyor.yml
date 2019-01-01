@@ -22,9 +22,9 @@ artifacts:
 
 deploy:
 - provider: NuGet
-  server: https://www.myget.org/F/nancyfx/api/v2/package
+  server: https://www.myget.org/F/nancy-reduced/api/v2/package
   api_key:
-    secure: +D460p+eBTZg/1k7YpDwGp8G74VhOhjxp62EypsjVyul8DT/6B8o3taDbQCZCJ6+
+    secure: TqnkEJnkj49DzdZ9SIhGY+geJ/aoGgYQySov0BhvIZWuqhVv1TKXPT10yj4Qps7X
   skip_symbols: true
   on:
     branch: master
