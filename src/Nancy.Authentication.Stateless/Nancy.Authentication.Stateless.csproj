@@ -1,7 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Description>A stateless authentication provider for Nancy.</Description>
-    <PackageTags>$(PackageTags);Authentication</PackageTags>
+    <Description>A stateless authentication provider for Nancy, forked from the official package</Description>
+    <PackageTags>Nancy-Reduced;Authentication</PackageTags>
     <TargetFrameworks>netstandard2.0</TargetFrameworks>
+    <PackageId>Nancy.Authentication.Stateless</PackageId>
+    <Product>Nancy-Reduced.Authentication.Stateless</Product>
+    <PackageLicenseUrl>https://github.com/cmenge/Nancy/blob/master/license.txt</PackageLicenseUrl>
   </PropertyGroup>
 </Project>

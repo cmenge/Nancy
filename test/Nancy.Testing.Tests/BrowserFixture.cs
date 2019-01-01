@@ -12,7 +12,7 @@ namespace Nancy.Testing.Tests
     using Nancy.Helpers;
     using Nancy.Session;
     using Nancy.Tests;
-    using Nancy.Authentication.Forms;
+    // using Nancy.Authentication.Forms;
     using Nancy.Configuration;
     using Nancy.Tests.xUnitExtensions;
     using Xunit;
@@ -407,36 +407,36 @@ namespace Nancy.Testing.Tests
             result.Context.Request.Url.Scheme.ShouldEqual("https");
         }
 
-        [Fact]
-        public async Task Should_add_forms_authentication_cookie_to_the_request()
-        {
-            //Given
-            var userId = A.Dummy<Guid>();
+        //[Fact]
+        //public async Task Should_add_forms_authentication_cookie_to_the_request()
+        //{
+        //    //Given
+        //    var userId = A.Dummy<Guid>();
 
-            var formsAuthConfig = new FormsAuthenticationConfiguration()
-            {
-                RedirectUrl = "/login",
-                UserMapper = A.Fake<IUserMapper>(),
-            };
+        //    var formsAuthConfig = new FormsAuthenticationConfiguration()
+        //    {
+        //        RedirectUrl = "/login",
+        //        UserMapper = A.Fake<IUserMapper>(),
+        //    };
 
-            var encryptedId = formsAuthConfig.CryptographyConfiguration.EncryptionProvider.Encrypt(userId.ToString());
-            var hmacBytes = formsAuthConfig.CryptographyConfiguration.HmacProvider.GenerateHmac(encryptedId);
-            var hmacString = Convert.ToBase64String(hmacBytes);
-            var cookieContents = String.Format("{1}{0}", encryptedId, hmacString);
+        //    var encryptedId = formsAuthConfig.CryptographyConfiguration.EncryptionProvider.Encrypt(userId.ToString());
+        //    var hmacBytes = formsAuthConfig.CryptographyConfiguration.HmacProvider.GenerateHmac(encryptedId);
+        //    var hmacString = Convert.ToBase64String(hmacBytes);
+        //    var cookieContents = String.Format("{1}{0}", encryptedId, hmacString);
 
-            //When
-            var response = await browser.Get("/cookie", (with) =>
-                {
-                    with.HttpRequest();
-                    with.FormsAuth(userId, formsAuthConfig);
-                });
+        //    //When
+        //    var response = await browser.Get("/cookie", (with) =>
+        //        {
+        //            with.HttpRequest();
+        //            with.FormsAuth(userId, formsAuthConfig);
+        //        });
 
-            var cookie = response.Cookies.Single(c => c.Name == FormsAuthentication.FormsAuthenticationCookieName);
-            var cookieValue = cookie.Value;
+        //    var cookie = response.Cookies.Single(c => c.Name == FormsAuthentication.FormsAuthenticationCookieName);
+        //    var cookieValue = cookie.Value;
 
-            //Then
-            cookieValue.ShouldEqual(cookieContents);
-        }
+        //    //Then
+        //    cookieValue.ShouldEqual(cookieContents);
+        //}
 
         [Fact]
         public async Task Should_return_JSON_serialized_form()

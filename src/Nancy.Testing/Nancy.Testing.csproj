@@ -1,8 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Description>Test harness for Nancy applications.</Description>
+    <Description>A netcore-only fork of the test harness for Nancy applications.</Description>
     <PackageTags>$(PackageTags);Testing</PackageTags>
     <TargetFrameworks>netstandard2.0</TargetFrameworks>
+    <PackageId>Nancy.Testing</PackageId>
+    <PackageLicenseUrl>https://github.com/cmenge/Nancy/blob/master/license.txt</PackageLicenseUrl>
+    <PackageProjectUrl />
+    <Product>Nancy-Reduced.Testing</Product>
   </PropertyGroup>
 
   <ItemGroup>
