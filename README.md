@@ -1,6 +1,30 @@
-# Meet Nancy [![NuGet Version](http://img.shields.io/nuget/v/Nancy.svg?style=flat)](https://www.nuget.org/packages/Nancy/) [![Slack Status](http://slack.nancyfx.org/badge.svg)](http://slack.nancyfx.org)
+# Meet a reduced version of Nancy - what is this?
 
-Nancy is a lightweight, low-ceremony, framework for building HTTP based services on .NET Framework/Core and [Mono](http://mono-project.com). The goal of the framework is to stay out of the way as much as possible and provide a super-duper-happy-path to all interactions.
+Since Nancy hasn't seen commits since Mid-2018 and is largely incompatible with newer releases of .NET Core, this is a .NET Core only fork with reduced feature set, focused on implementing APIs as opposed to serving pre-rendered pages. 
+
+### Significant differences
+
+  - This is (only!) .NET Core 2.2 compatible
+  - No support for view engines, except the embedded Super Simple View Engine
+  - Nancy.Authentication.Forms no longer considered a 'core' package, Nancy.Testing is no longer depending on it (which also means the `FormsAuth` browser context extension helper is gone)
+  - Latest versions of upstream packages (FluentValidation, xunit, etc.)
+
+Even if you want statically rendered pages server-side, alternatives like a Gatsby-rendered page served by a nancy API seem to provide better development- and user-experience.
+
+Available here on github or via myget:
+  https://www.myget.org/F/nancy-reduced/api/v3/index.json
+
+
+```
+    <PackageReference Include="Nancy" Version="2.0.0-jackryan" />
+    <PackageReference Include="Nancy.Authentication.Stateless" Version="2.0.0-pre2" />
+    <PackageReference Include="Nancy.Serialization.JsonNet" Version="2.0.0-pre3" />
+```
+
+
+# Meet Nancy
+
+Nancy is a lightweight, low-ceremony, framework for building HTTP based services on ~~.NET Framework/Core and [Mono](http://mono-project.com)~~. .NET Core. The goal of the framework is to stay out of the way as much as possible and provide a super-duper-happy-path to all interactions.
 
 Nancy is designed to handle `DELETE`, `GET`, `HEAD`, `OPTIONS`, `POST`, `PUT` and `PATCH` requests and provides a simple, elegant, [Domain Specific Language (DSL)](http://en.wikipedia.org/wiki/Domain-specific_language) for returning a response with just a couple of keystrokes, leaving you with more time to focus on the important bits..
 **your** code and **your** application.
@@ -25,7 +49,7 @@ Compile, run and enjoy the simple, elegant design!
 * Built from the bottom up, not simply a DSL on top of an existing framework. Removing limitations and feature hacks of an underlying framework, as well as the need to reference more assemblies than you need. _keep it light_
 * Run anywhere. Nancy is not built on any specific hosting technology can be run anywhere. Out of the box, Nancy supports running on ASP.NET/IIS, WCF, Self-hosting and any [OWIN](http://owin.org)
 * Ultra lightweight action declarations for GET, HEAD, PUT, POST, DELETE, OPTIONS and PATCH requests
-* View engine integration (Razor, Spark, dotLiquid, our own SuperSimpleViewEngine and many more)
+* ~~View engine integration (Razor, Spark, dotLiquid, our own SuperSimpleViewEngine and many more)~~
 * Powerful request path matching that includes advanced parameter capabilities. The path matching strategy can be replaced with custom implementations to fit your exact needs
 * Easy response syntax, enabling you to return things like int, string, HttpStatusCode and Action<Stream> elements without having to explicitly cast or wrap your response - you just return it and Nancy _will_ do the work for you
 * A powerful, light-weight, testing framework to help you verify the behavior of your application
@@ -49,10 +73,6 @@ Above all, creating an application with Nancy should be a pleasure, and hopefull
 
 As a start several working samples are provided in the `/sample` directory. Simply run the build script `build.ps1` (for Windows PowerShell) or `build.sh` (for \*nix-Bash) first.
 
-## Community
-
-Nancy followers can be found on Slack [NancyFx team](http://nancyfx.slack.com). You can also find Nancy on Twitter using the #NancyFx hashtag.
-
 ## Help out
 
 There are many ways you can contribute to Nancy. Like most open-source software projects, contributing code
@@ -72,10 +92,9 @@ Nancy are:
 
 | Platform                    | Status                                                                                                                                  |
 |-----------------------------|-----------------------------------------------------------------------------------------------------------------------------------------|
-| AppVeyor (.NET & .NET Core) | [![Build Status](https://ci.appveyor.com/api/projects/status/mpd9lbxvithu16vg/branch/master?svg=true)](https://ci.appveyor.com/project/NancyFx/nancy) |
-| Travis (Mono)               | [![Build Status](https://travis-ci.org/NancyFx/Nancy.png?branch=master)](https://travis-ci.org/NancyFx/Nancy)                           |
+| AppVeyor (.NET Core) | [![Build status](https://ci.appveyor.com/api/projects/status/xpg7w5wosm0hx29t?svg=true)](https://ci.appveyor.com/project/ChrisMenge/nancy)     |
 
-To get build artifacts of latest `master`, please use our [MyGet feed](https://www.myget.org/gallery/nancyfx)
+To get build artifacts of latest `master`, please use our [MyGet feed](https://www.myget.org/gallery/nancy-reduced)
 
 ## Contributors
 

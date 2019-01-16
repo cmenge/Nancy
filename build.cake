@@ -261,50 +261,6 @@ Task("Test")
         {
             throw new CakeException("One or more tests failed during test execution");
         }
-
-        /*
-            Exclude Nancy.ViewEngines.Spark.Tests from test execution until their problem
-            with duplicate assembly references (if the same assembly exists more than once
-            in the application domain, it fails to compile the views) has been fixed.
-        */
-
-        // var projects =
-        //     GetFiles("./test/**/*.csproj");
-        //     - GetFiles("./test/Nancy.ViewEngines.Spark.Tests/Nancy.ViewEngines.Spark.Tests.csproj");
-
-        // if (projects.Count == 0)
-        // {
-        //     throw new CakeException("Unable to find any projects to test.");
-        // }
-
-        // foreach(var project in projects)
-        // {
-        //     var content =
-        //         System.IO.File.ReadAllText(project.FullPath, Encoding.UTF8);
-
-        //     if (IsRunningOnUnix() && content.Contains(">" + fullFrameworkTarget + "<"))
-        //     {
-        //         Information(project.GetFilename() + " only supports " +fullFrameworkTarget + " and tests cannot be executed on *nix. Skipping.");
-        //         continue;
-        //     }
-
-        //     var settings = new ProcessSettings {
-        //         Arguments = string.Concat("xunit -configuration ", configuration, " -nobuild"),
-        //         WorkingDirectory = project.GetDirectory()
-        //     };
-
-        //     if (IsRunningOnUnix())
-        //     {
-        //         settings.Arguments.Append(string.Concat("-framework ", netCoreTarget));
-        //     }
-
-        //     Information("Executing tests for " + project.GetFilename() + " with arguments: " + settings.Arguments.Render());
-
-        //     if (StartProcess("dotnet", settings) != 0)
-        //     {
-        //         throw new CakeException("One or more tests failed during execution of: " + project.GetFilename());
-        //     }
-        // }
     });
 
 Task("Update-Version")
